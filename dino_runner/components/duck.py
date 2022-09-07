@@ -15,8 +15,6 @@ class Duck(Dinosaur):
         else:
             self.latest_image = 1
         
-        
-
-        screen.blit(self.image, (self.dino_rect.x,self.dino_rect.y))
+        self.screen.blit(self.image, (self.dino_rect.x,self.dino_rect.y))
         self.increment_index = 0.1
         self.step_index += self.increment_index

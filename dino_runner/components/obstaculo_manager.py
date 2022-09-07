@@ -12,9 +12,10 @@ class Obstacles_manager:
         self.obstacles = []
 
     def update(self, game):
-        type_obstacles = [Cactus(SMALL_CACTUS), Bird(BIRD), Cactus(LARGE_CACTUS)]
         if len(self.obstacles) == 0:
-            self.obstacles.append(random(len(type_obstacles) ))
+            self.obstacles.append(Cactus(SMALL_CACTUS or LARGE_CACTUS))
+        if len(self.obstacles) == 3:
+            self.obstacles.append(Bird(BIRD))
 
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
