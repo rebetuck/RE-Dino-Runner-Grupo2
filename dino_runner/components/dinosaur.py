@@ -7,7 +7,7 @@ class Dinosaur():
     Y_POS = 310
 
     def __init__(self) -> None:
-        self.current_image = 0
+        self.latest_image = 0
         self.image = RUNNING[0]
         self.dino_rect = self.image.get_rect()
         
@@ -19,20 +19,20 @@ class Dinosaur():
         self.step_index = 0
         
 
-    """def update(self):
-        pass"""
+    def update(self):
+        pass
 
     def draw(self, screen):
         """self.current_image += 1
         if self.current_image > 1:
             self.current_image = 0"""
-
+# cambiar el movimiento de la imagen a update
         if int(self.step_index) %2 == 0:
-            self.current_image = 0
+            self.latest_image = 0
         else:
-            self.current_image = 1
+            self.latest_image = 1
         
-        self.image = RUNNING[self.current_image]
+        self.image = RUNNING[self.latest_image]
 
         screen.blit(self.image, (self.dino_rect.x,self.dino_rect.y))
         self.increment_index = 0.1
@@ -41,14 +41,11 @@ class Dinosaur():
 
 
     """def run(self):
-        self.current_image += 1
-        if self.current_image > 1:
-            self.current_image = 0
-        self.image = RUNNING[self.current_image] if self.step_index < 5 else RUNNING[1]
+        self.image = RUNNING[0] if self.step_index < 5 else RUNNING[1]
         self.dino_rect = self.image.get_rect()
 
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
-        
+
         self.step_index += 1
 """
