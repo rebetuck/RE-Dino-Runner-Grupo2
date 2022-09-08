@@ -7,9 +7,7 @@ class Dinosaur(Sprite):
 
     X_POS = 50
     Y_POS = 300
-
     Y_POS_DUCK = 325
-
     JUMP_VEL = 9
 
     def __init__(self):
@@ -58,6 +56,10 @@ class Dinosaur(Sprite):
             self.state = 0
             self.dino_rect.y = self.Y_POS
             self.jump_vel = self.JUMP_VEL
+
+    def power_ups(self):
+        pass
+
 
     def draw(self, screen):
         screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
