@@ -25,6 +25,8 @@ class Dinosaur(Sprite):
     def setup_state_boolean (self):
         self.has_powerup = False
         self.shield = False
+        self.hammer = False
+        self.cake = False
         self.show_text = False
         self.shield_time_up = 0
 
@@ -42,6 +44,8 @@ class Dinosaur(Sprite):
         elif key_in[pygame.K_UP]:
             
             self.state = 2
+        elif key_in[pygame.K_9] and pygame.mixer.music.get_volume() > 0.0:
+            pygame.mixer.music.set_volume(pygame.mixer.music.set_volume() - 0.01)
         else:
             if self.state != 2:
                 self.state = 0

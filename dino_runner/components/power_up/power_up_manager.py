@@ -13,6 +13,7 @@ class PowerUpManager:
         self.points = 0
         self.option_number = list(range(1,10))
         self.power_up_sound = pygame.mixer.Sound(os.path.join(SOUND_DIR,'power_up.mp3'))
+        self.lives = True
 
     def reset_power_ups(self, points):
         self.powerups = []
@@ -35,6 +36,8 @@ class PowerUpManager:
             if (player.dino_rect.colliderect(power_up.rect)):
                 power_up.star_time = pygame.time.get_ticks()
                 player.shield = True
+                player.hammer = True
+                player.cake = True
                 player.show_text = True
                 player.type = power_up.type
                 time_random = random.randrange(5,8)

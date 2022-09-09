@@ -21,7 +21,7 @@ class Obstacles_manager:
 
 
     def update(self, game):
-        self.type_obstacle = [Bird(BIRD), Cactus(LARGE_CACTUS), Cactus(SMALL_CACTUS), Cake(CAKE)]
+        self.type_obstacle = [Bird(BIRD), Cactus(LARGE_CACTUS), Cactus(SMALL_CACTUS)]
         if len(self.obstacles) == 0:
             self.obstacles.append(random.choice(self.type_obstacle))
 
@@ -32,7 +32,7 @@ class Obstacles_manager:
             if (game.player.dino_rect.colliderect(obstacle.rect) ):
                 if game.player.shield:
                     self.obstacles.remove(obstacle)
-                    PowerUpManager.reset_power_ups(self)
+                    PowerUpManager.update(self)
 
                 elif not game.player.has_lives :
                     game.player_heart_manager.reduce_heart_count()

@@ -1,11 +1,8 @@
-from random import random
-import pygame
-from dino_runner.components.obstacles.obstaculo import Obstacle
-import random
+from dino_runner.components.power_up.power_up import PowerUp
+from dino_runner.utils.constants import CAKE, SHIELD_TYPE
 
-class Cake(Obstacle):
-    def __init__(self, image):
-        self.type = 0
-        self.gift = True
-        super().__init__(image,self.type, self.gift)
-        self.rect.y =320
+class Cake(PowerUp):
+    def __init__(self):
+        self.image = CAKE
+        self.type = SHIELD_TYPE
+        super(Cake,self).__init__(self.image, self.type)
