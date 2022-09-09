@@ -1,16 +1,18 @@
 from tkinter import Menu
 import pygame
 import random
+import os
+from pygame.locals import * #gestiona eventos
 from dino_runner.components.obstacles.obstaculo import Obstacle
 from dino_runner.components.obstacles.bird import Bird
 from dino_runner.components.obstacles.cactus import Cactus
-from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD
+from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD, SOUND_DIR
 
 class Obstacles_manager:
 
     def __init__(self):
         self.obstacles = []
-        #self.death_sound = pygame.mixer.Sound("dead.wav")
+        self.death_sound = pygame.mixer.Sound(os.path.join(SOUND_DIR,'muerte.mp3'))
 
     def new_method(self):
         self.game_speed = 15
@@ -36,7 +38,8 @@ class Obstacles_manager:
                         self.obstacles.pop()
                         start_transition_time = pygame.time.get_ticks()
                         game.player.live_transition_time = start_transition_time + 100
-                    else:    
+                    else:
+                        self.death_sound.play()    
                         pygame.time.delay(500)
                         self.obstacles.remove(obstacle)
                         game.death_count += 1
