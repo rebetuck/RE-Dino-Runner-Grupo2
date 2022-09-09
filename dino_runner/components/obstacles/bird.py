@@ -8,8 +8,9 @@ class Bird(Obstacle):
     def __init__(self, image):
         self.imdex = 0
         self.type = 0
-        super().__init__(image,self.type)
-        self.rect.y = random.randint(120, 180)
+        self.gift = False
+        super().__init__(image,self.type, self.gift)
+        self.rect.y = random.randint(180, 200)
         
         self.image = BIRD
         

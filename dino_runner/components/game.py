@@ -15,7 +15,7 @@ class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(TITLE)
-        pygame.display.set_icon(ICON)
+        
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
@@ -31,20 +31,31 @@ class Game:
         self.shield = False
         self.obstacle_manager = Obstacles_manager()
         self.player_heart_manager = PlayerHeartManager()
+        self.music_fondo = pygame.mixer.Sound(os.path.join(SOUND_DIR,'music.mp3'))
+        self.after_death_sound = pygame.mixer.Sound(os.path.join(SOUND_DIR,'after_dead.mp3'))
         
     def run(self):
         # Game loop: events - update - draw
-        pygame.mixer.music.load(os.path.join(SOUND_DIR,'music.mp3'))
-        pygame.mixer.music.play(-1)
+        
+        self.music_fondo.play()
         self.create_component()
         self.playing = True
+        self.reset()
         self.menu()
+        
         while self.playing:
             self.events()
             self.update()
             self.draw()
-        pygame.quit()
+        
         self.death_count += 1
+
+    def reset(self):
+        self.obstacle_manager.obstacles.clear()
+        self.playing = True
+        self.points = 0
+        self.player_heart_manager.draw(self.screen)
+        self.power_up_manager.reset_power_ups(0)
 
     def create_component(self):
         self.power_up_manager.reset_power_ups(self.points)
@@ -106,6 +117,7 @@ class Game:
         self.print_menu_elements(self.death_count)
         
         pygame.display.update()
+        
         self.event_to_play()
         
     def print_menu_elements(self, death_count):
@@ -113,12 +125,17 @@ class Game:
         if death_count == 0:
             text, text_rect = text_utils.get_center_message("Press any key to start")
             self.screen.blit(text, text_rect)
-            image_width = ICON.get_width()
-            self.screen.blit(ICON, (text_rect.x + 100, text_rect.y + 100)    )
+            text, text_rect = text_utils.get_center_message("Made by: Rebeca Guerra A.")
+            self.screen.blit(text, (120,100))
+            self.screen.blit(ICON, (550,300))
         elif death_count > 0:
+            self.music_fondo.stop()
+            pygame.time.wait(1300)
+              
+            self.after_death_sound.play()
             score, score_rect = text_utils.get_center_message("Your score: " + str(self.points), half_screen_height+50)
             text, text_rect = text_utils.get_center_message("Press any key to restart")
-            self.screen.blit(score, score_rect)
+            self.screen.blit(score, (120,100))
             self.screen.blit(text, text_rect)
 
  

@@ -1,7 +1,7 @@
 from pygame.sprite import Sprite
 import pygame
 
-from dino_runner.utils.constants import DEFAULT_TYPE, JUMPING, RUNNING, DUCKING
+from dino_runner.utils.constants import DEFAULT_TYPE, JUMPING, RUNNING, DUCKING, SHIELD_TYPE
 
 class Dinosaur(Sprite):
 
@@ -20,7 +20,6 @@ class Dinosaur(Sprite):
         self.jump_vel = self.JUMP_VEL
         self.has_lives = False
         self.lives_transition_time = 0
-        #self.jump_sound = pygame.mixer.Sound("jump.wav")
         self.setup_state_boolean()
 
     def setup_state_boolean (self):
@@ -41,7 +40,7 @@ class Dinosaur(Sprite):
             self.state = 1
             self.jump_vel = self.JUMP_VEL
         elif key_in[pygame.K_UP]:
-            #self.jum_sound.play()
+            
             self.state = 2
         else:
             if self.state != 2:
@@ -69,10 +68,6 @@ class Dinosaur(Sprite):
             self.jump_vel = self.JUMP_VEL
 
 
-    def draw(self, screen):
-        screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
-        #player.
-
     def check_lives(self):
         if self.has_lives:
             transition_time = round(((self.lives_transition_time - pygame.time.get_ticks()) / 1000))
@@ -82,7 +77,7 @@ class Dinosaur(Sprite):
     def check_visibility(self,screen):
         if self.shield:
             time_to_show = round((self.shield_time_up - pygame.time.get_ticks()) / 1000,2)
-            if time_to_show >= 0:
+            if (time_to_show >= 0):
                 fond = pygame.font.Font('freesansbold.ttf', 18)
                 text = fond.render(f"shield enable for {time_to_show}", True, (0,0,0))
                 textRect = text.get_rect()
@@ -90,8 +85,12 @@ class Dinosaur(Sprite):
                 screen.blit(text, textRect)
             else:
                 self.shield=False
-                self.update_to_default(DEFAULT_TYPE)
+                self.update_to_default(SHIELD_TYPE)
 
     def update_to_default(self, current_type):
         if(self.type == current_type):
             self.type = DEFAULT_TYPE
+            
+    def draw(self, screen):
+        screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+        #player.

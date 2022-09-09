@@ -1,3 +1,4 @@
+
 import pygame
 import os
 
@@ -61,7 +62,8 @@ BIRD = [
     pygame.image.load(os.path.join(IMG_DIR, "Bird/Bird1.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Bird/Bird2.png")),
 ]
-
+CAKE = [pygame.image.load(os.path.join(IMG_DIR, 'Other/cake.png')),
+        pygame.image.load(os.path.join(IMG_DIR, 'Other/cake.png'))]
 CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud.png'))
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
@@ -75,3 +77,4 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 DEFAULT_TYPE = "default"
 HAMMER_TYPE = "hammer"
+SHIELD_TYPE = "shield"

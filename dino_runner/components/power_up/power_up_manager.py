@@ -17,7 +17,7 @@ class PowerUpManager:
     def reset_power_ups(self, points):
         self.powerups = []
         self.points = points
-        self.when_appears = random.randint(200,300)+self.points
+        self.when_appears = random.randint(300,400)+self.points
 
     def generate_power_ups(self, points):
         self.points = points
@@ -25,22 +25,26 @@ class PowerUpManager:
             if self.when_appears == self.points:
                 print("generating powerups")
                 self.when_appears = random.randint(self.when_appears + 200, 500 + self.when_appears)
-                self.power_up_sound.play()
                 self.powerups.append(Shield())
         return self.powerups
 
     def update(self, points, game_speed, player):
         self.generate_power_ups(points)
-        for powerup in self.powerups:
-            powerup.update(game_speed, self.powerups)
-            if (player.dino_rect.colliderect(powerup.rect)):
-                powerup.star_time = pygame.time.get_ticks()
+        for power_up in self.powerups:
+            power_up.update(game_speed, self.powerups)
+            if (player.dino_rect.colliderect(power_up.rect)):
+                power_up.star_time = pygame.time.get_ticks()
                 player.shield = True
                 player.show_text = True
-                player.type = powerup.type
+                player.type = power_up.type
                 time_random = random.randrange(5,8)
-                player.shield_time_up = powerup.start_time + (time_random * 1000)
-                self.powerups.remove(powerup)
+                while player.shield:
+                    self.power_up_sound.play()   
+                    player.shield_time_up = power_up.start_time + (time_random * 1000)
+                    self.powerups.remove(power_up)
+                    player.shield = False
+                    pygame.mixer.stop()
+                    break
 
     def draw(self, screen):
         for powerup in self.powerups:

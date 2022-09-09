@@ -8,6 +8,9 @@ class PlayerHeartManager:
     def reduce_heart_count(self):
         self.heart_count -=1
 
+    def increment_heart_count(self):
+        self.heart_count +=2
+
     def draw (self, screen):
         x_position = 10
         y_position = 20
