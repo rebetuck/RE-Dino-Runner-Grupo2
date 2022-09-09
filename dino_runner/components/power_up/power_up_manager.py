@@ -1,6 +1,8 @@
 from asyncio import shield
 import os
-from pygame.locals import * #gestiona eventos
+from pygame.locals import *
+from dino_runner.components.power_up.cake import Cake
+from dino_runner.components.power_up.hammer import Hammer #gestiona eventos
 from dino_runner.utils.constants import SOUND_DIR
 import pygame
 import random
@@ -11,7 +13,7 @@ class PowerUpManager:
         self.powerups = []
         self.when_appears = 0
         self.points = 0
-        self.option_number = list(range(1,10))
+        #self.option_number = list(range(1,10))
         self.power_up_sound = pygame.mixer.Sound(os.path.join(SOUND_DIR,'power_up.mp3'))
         self.lives = True
 
@@ -26,7 +28,9 @@ class PowerUpManager:
             if self.when_appears == self.points:
                 print("generating powerups")
                 self.when_appears = random.randint(self.when_appears + 200, 500 + self.when_appears)
-                self.powerups.append(Shield())
+                self.type_of_power = [Shield(), Cake(), Hammer()]
+                self.current_power = random.choice(self.type_of_power)
+                self.powerups.append(self.current_power)
         return self.powerups
 
     def update(self, points, game_speed, player):

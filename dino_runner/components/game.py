@@ -6,7 +6,7 @@ from dino_runner.components.power_up.power_up_manager import PowerUpManager
 from dino_runner.components.text_utils import get_center_message
 from dino_runner.components.player_hearts.player_heart_manager import PlayerHeartManager
 from dino_runner.components import text_utils
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, SOUND_DIR
+from dino_runner.utils.constants import BG, GOV, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, SOUND_DIR
 from dino_runner.components.obstacles.obstaculo_manager import Obstacles_manager
 from dino_runner.components.dinosaur import Dinosaur
 
@@ -131,12 +131,14 @@ class Game:
         elif death_count > 0:
             self.music_fondo.stop()
             pygame.time.wait(1300)
-              
             self.after_death_sound.play()
             score, score_rect = text_utils.get_center_message("Your score: " + str(self.points), half_screen_height+50)
             text, text_rect = text_utils.get_center_message("Press any key to restart")
             self.screen.blit(score, (120,100))
             self.screen.blit(text, text_rect)
+            self.screen.blit(GOV, (550,300))
+            pygame.time.wait(1300)
+            self.after_death_sound.stop()
 
  
     def event_to_play(self):

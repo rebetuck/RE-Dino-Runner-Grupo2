@@ -1,7 +1,7 @@
 from pygame.sprite import Sprite
 import pygame
-
-from dino_runner.utils.constants import DEFAULT_TYPE, JUMPING, RUNNING, DUCKING, SHIELD_TYPE
+import os
+from dino_runner.utils.constants import DEFAULT_TYPE, JUMPING, RUNNING, DUCKING, SHIELD_TYPE, SOUND_DIR
 
 class Dinosaur(Sprite):
 
@@ -20,6 +20,7 @@ class Dinosaur(Sprite):
         self.jump_vel = self.JUMP_VEL
         self.has_lives = False
         self.lives_transition_time = 0
+        self.music_fondo = pygame.mixer.Sound(os.path.join(SOUND_DIR,'music.mp3'))
         self.setup_state_boolean()
 
     def setup_state_boolean (self):
@@ -31,6 +32,7 @@ class Dinosaur(Sprite):
         self.shield_time_up = 0
 
     def update(self, key_in):
+        
         if self.state == 0:
             self.run()
         elif self.state == 1:
@@ -44,8 +46,8 @@ class Dinosaur(Sprite):
         elif key_in[pygame.K_UP]:
             
             self.state = 2
-        elif key_in[pygame.K_9] and pygame.mixer.music.get_volume() > 0.0:
-            pygame.mixer.music.set_volume(pygame.mixer.music.set_volume() - 0.01)
+        elif key_in[pygame.K_9] and self.music_fondo.get_volume() > 0.0:
+            self.music_fondo.set_volume(self.music_fondo.set_volume() - 0.01)
         else:
             if self.state != 2:
                 self.state = 0
