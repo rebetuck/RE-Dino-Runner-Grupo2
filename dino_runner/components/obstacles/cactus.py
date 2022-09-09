@@ -1,6 +1,6 @@
 from random import random
 import pygame
-from dino_runner.components.obstaculo import Obstacle
+from dino_runner.components.obstacles.obstaculo import Obstacle
 import random
 
 class Cactus(Obstacle):
