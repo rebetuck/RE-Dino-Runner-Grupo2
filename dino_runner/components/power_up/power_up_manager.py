@@ -17,11 +17,11 @@ class PowerUpManager:
 
     def generate_power_ups(self, points):
         self.points = points
-        if len(self.points) == 0:
+        if len(self.powerups) == 0:
             if self.when_appears == self.points:
                 print("generating powerups")
                 self.when_appears = random.randint(self.when_appears + 200, 500 + self.when_appears)
-                self.powerups.append(shield())
+                self.powerups.append(Shield())
         return self.powerups
 
     def update(self, points, game_speed, player):
@@ -34,9 +34,9 @@ class PowerUpManager:
                 player.show_text = True
                 player.type = powerups.type
                 time_random = random.randrange(5,8)
-                player.shield_time_up = powerups.start-time + (time_random * 1000)
+                player.shield_time_up = powerups.start_time + (time_random * 1000)
                 self.powerups.remove(powerups)
 
     def draw(self, screen):
         for powerups in self.powerups:
-            pass
+            powerups.draw(screen)

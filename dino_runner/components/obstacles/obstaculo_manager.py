@@ -1,3 +1,4 @@
+from tkinter import Menu
 import pygame
 import random
 from dino_runner.components.obstacles.obstaculo import Obstacle
@@ -9,6 +10,7 @@ class Obstacles_manager:
 
     def __init__(self):
         self.obstacles = []
+        #self.death_sound = pygame.mixer.Sound("dead.wav")
 
     def new_method(self):
         self.game_speed = 15
@@ -24,21 +26,22 @@ class Obstacles_manager:
             obstacle.update(game.game_speed, self.obstacles)
 
             if (game.player.dino_rect.colliderect(obstacle.rect) ):
+                if game.player.shield:
+                    self.obstacles.pop()
+                    break
                 if not game.player.has_lives:
-                    #pygame.time.delay(500)
-
                     game.player_heart_manager.reduce_heart_count()
                     if game.player_heart_manager.heart_count > 0:
                         game.player.has_lives = True
                         self.obstacles.pop()
                         start_transition_time = pygame.time.get_ticks()
-                        game.player.live_transition_time = start_transition_time + 1000
+                        game.player.live_transition_time = start_transition_time + 100
                     else:    
                         pygame.time.delay(500)
                         self.obstacles.remove(obstacle)
-                        game.playing = False
                         game.death_count += 1
-                        game.again()
+                        game.playing = False
+                        
                         break
                 
                 

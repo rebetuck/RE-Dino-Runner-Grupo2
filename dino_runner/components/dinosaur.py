@@ -20,6 +20,7 @@ class Dinosaur(Sprite):
         self.jump_vel = self.JUMP_VEL
         self.has_lives = False
         self.lives_transition_time = 0
+        #self.jump_sound = pygame.mixer.Sound("jump.wav")
         self.setup_state_boolean()
 
     def setup_state_boolean (self):
@@ -40,6 +41,7 @@ class Dinosaur(Sprite):
             self.state = 1
             self.jump_vel = self.JUMP_VEL
         elif key_in[pygame.K_UP]:
+            #self.jum_sound.play()
             self.state = 2
         else:
             if self.state != 2:
@@ -66,9 +68,6 @@ class Dinosaur(Sprite):
             self.dino_rect.y = self.Y_POS
             self.jump_vel = self.JUMP_VEL
 
-    def power_ups(self):
-        pass
-
 
     def draw(self, screen):
         screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
@@ -76,7 +75,7 @@ class Dinosaur(Sprite):
 
     def check_lives(self):
         if self.has_lives:
-            transition_time = round((self.lives_transition_time - pygame.time.get_ticks()) / 1000)
+            transition_time = round(((self.lives_transition_time - pygame.time.get_ticks()) / 1000))
             if transition_time < 0:
                 self.has_lives = False
 
